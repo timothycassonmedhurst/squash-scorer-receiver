@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Squash Scorer Plus Receiver</title>
+    <style type="text/css">
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(to right, #222, #444, #222);
+            border-bottom: 2px solid #555;
+        }
+
+        .header img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .header .scorer-text {
+            color: #9c27b0;
+            margin-left: 10px;
+        }
+
+        .main-score-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 40px;
+        }
+
+        .player-container {
+            flex: 1;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .player-name {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        .serving-indicator {
+            color: #ff9800;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            visibility: hidden;
+        }
+
+        .serving-indicator.visible {
+            visibility: visible;
+        }
+
+        .score {
+            font-size: 300px;
+            font-weight: bold;
+            color: #8bc34a; /* Team A color */
+        }
+
+        .team-b .score {
+            color: #ff9800; /* Team B color */
+        }
+
+        .divider {
+            font-size: 150px;
+            color: #fff;
+            margin: 0 40px;
+        }
+
+        .footer {
+            background-color: #111;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 2px solid #333;
+        }
+
+        .game-score-item {
+            text-align: center;
+        }
+
+        .game-label {
+            color: #aaa;
+            font-size: 20px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .game-score {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .game-score .score-a { color: #8bc34a; }
+        .game-score .score-b { color: #ff9800; }
+
+        .match-info {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            font-size: 24px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SQUASH <span class="scorer-text">SCORER</span></h1>
+    </div>
+
+    <div class="main-score-area">
+        <div class="player-container team-a">
+            <div id="playerA" class="player-name">TIM MEDHURST</div>
+            <div id="servingA" class="serving-indicator">SERVING</div>
+        </div>
+
+        <div id="scoreA" class="score">0</div>
+        <div class="divider">-</div>
+        <div id="scoreB" class="score">0</div>
+
+        <div class="player-container team-b">
+            <div id="playerB" class="player-name">SIMON EXAMPLE</div>
+            <div id="servingB" class="serving-indicator">SERVING</div>
+        </div>
+    </div>
+
+    <div id="previousGames" class="footer">
+        <!-- Previous game scores will be injected here -->
+    </div>
+
+    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <script type="text/javascript" src="receiver.js"></script>
+</body>
+</html>
