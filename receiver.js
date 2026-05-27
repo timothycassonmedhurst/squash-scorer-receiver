@@ -2,6 +2,13 @@ const context = cast.framework.CastReceiverContext.getInstance();
 
 const CAST_NAMESPACE = 'urn:x-cast:com.medhurst.squashscorerplus';
 
+// Set up receiver options to prevent timeout
+const options = new cast.framework.CastReceiverOptions();
+// maxInactivity defines how long (in seconds) the receiver stays active without interaction.
+// We set this to a very high value (24 hours) to ensure the scoreboard stays visible
+// even during long breaks in play.
+options.maxInactivity = 86400;
+
 context.addCustomMessageListener(CAST_NAMESPACE, (event) => {
     console.log('Received message:', event.data);
     try {
@@ -74,4 +81,5 @@ function updateUI(data) {
     }
 }
 
-context.start();
+// Start the receiver with the configured options
+context.start(options);
