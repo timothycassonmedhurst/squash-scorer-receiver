@@ -56,15 +56,18 @@
         }
 
         .player-name {
-            font-size: 40px;
+            font-size: 4vw;
             font-weight: bold;
             margin-top: 20px;
             text-transform: uppercase;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .serving-indicator {
             color: #ff9800;
-            font-size: 24px;
+            font-size: 2.5vw;
             font-weight: bold;
             margin-top: 10px;
             visibility: hidden;
@@ -75,7 +78,7 @@
         }
 
         .score {
-            font-size: 300px;
+            font-size: 25vw;
             font-weight: bold;
             color: #8bc34a; /* Team A color */
         }
@@ -133,16 +136,16 @@
 
     <div class="main-score-area">
         <div class="player-container team-a">
-            <div id="playerA" class="player-name">TIM MEDHURST</div>
+            <div id="playerA" class="player-name">Waiting...</div>
             <div id="servingA" class="serving-indicator">SERVING</div>
         </div>
 
-        <div id="scoreA" class="score">0</div>
+        <div id="scoreA" class="score">-</div>
         <div class="divider">-</div>
-        <div id="scoreB" class="score">0</div>
+        <div id="scoreB" class="score">-</div>
 
         <div class="player-container team-b">
-            <div id="playerB" class="player-name">SIMON EXAMPLE</div>
+            <div id="playerB" class="player-name">Waiting...</div>
             <div id="servingB" class="serving-indicator">SERVING</div>
         </div>
     </div>
