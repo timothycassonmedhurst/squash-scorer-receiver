@@ -1,6 +1,16 @@
 const context = cast.framework.CastReceiverContext.getInstance();
+const playerManager = context.getPlayerManager();
 
 const CAST_NAMESPACE = 'urn:x-cast:com.medhurst.squashscorerplus';
+
+// Customize player behavior for keep-alive stream
+playerManager.setMessageInterceptor(
+    cast.framework.messages.MessageType.LOAD,
+    loadRequestData => {
+        // We can modify the load request here if needed
+        return loadRequestData;
+    }
+);
 
 // Set up receiver options to prevent timeout
 const options = new cast.framework.CastReceiverOptions();
