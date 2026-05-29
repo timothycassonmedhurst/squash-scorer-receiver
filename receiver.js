@@ -3,17 +3,6 @@ const playerManager = context.getPlayerManager();
 
 const CAST_NAMESPACE = 'urn:x-cast:com.medhurst.squashscorerplus';
 
-// Customize player behavior to prevent timeout when video is playing
-playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.LOAD,
-    loadRequestData => {
-        if (loadRequestData.media && loadRequestData.media.contentId) {
-            loadRequestData.media.streamType = cast.framework.messages.StreamType.BUFFERED;
-        }
-        return loadRequestData;
-    }
-);
-
 // Set up receiver options to prevent timeout
 const options = new cast.framework.CastReceiverOptions();
 // maxInactivity defines how long (in seconds) the receiver stays active without interaction.
