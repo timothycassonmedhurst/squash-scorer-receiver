@@ -3,15 +3,6 @@ const playerManager = context.getPlayerManager();
 
 const CAST_NAMESPACE = 'urn:x-cast:com.medhurst.squashscorerplus';
 
-// Customize player behavior for keep-alive stream
-playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.LOAD,
-    loadRequestData => {
-        // We can modify the load request here if needed
-        return loadRequestData;
-    }
-);
-
 // Set up receiver options to prevent timeout
 const options = new cast.framework.CastReceiverOptions();
 // maxInactivity defines how long (in seconds) the receiver stays active without interaction.
@@ -47,6 +38,7 @@ function updateUI(data) {
     setText('playerB', data.teamB);
     setText('scoreA', data.scoreA);
     setText('scoreB', data.scoreB);
+    setText('matchDuration', data.matchDuration);
 
     // Handle serving indicator
     const servingA = document.getElementById('servingA');

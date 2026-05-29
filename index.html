@@ -41,6 +41,14 @@
             margin-left: 10px;
         }
 
+        .header .timer-text {
+            position: absolute;
+            right: 40px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+
         .main-score-area {
             flex: 1;
             display: flex;
@@ -132,6 +140,7 @@
 <body>
     <div class="header">
         <h1>SQUASH <span class="scorer-text">SCORER</span></h1>
+        <div id="matchDuration" class="timer-text"></div>
     </div>
 
     <div class="main-score-area">
@@ -153,9 +162,6 @@
     <div id="previousGames" class="footer">
         <!-- Previous game scores will be injected here -->
     </div>
-
-    <!-- Dummy media player to keep connection active -->
-    <cast-media-player style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0;"></cast-media-player>
 
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
     <script type="text/javascript" src="receiver.js"></script>
