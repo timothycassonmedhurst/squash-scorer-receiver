@@ -11,7 +11,6 @@ const options = new cast.framework.CastReceiverOptions();
 options.maxInactivity = 86400;
 
 context.addCustomMessageListener(CAST_NAMESPACE, (event) => {
-    console.log('Received message:', event.data);
     try {
         let data = event.data;
         if (typeof data === 'string') {
@@ -21,6 +20,16 @@ context.addCustomMessageListener(CAST_NAMESPACE, (event) => {
     } catch (e) {
         console.error('Error handling cast message:', e);
     }
+});
+
+// Log player events to debug connection drops
+playerManager.addEventListener(cast.framework.events.EventType.ERROR, (event) => {
+    console.error('Player error:', event);
+});
+
+context.addEventListener(cast.framework.events.EventType.SENDER_DISCONNECTED, (event) => {
+    console.log('Sender disconnected:', event);
+    // Even if sender disconnects, we stay alive due to maxInactivity
 });
 
 function updateUI(data) {
