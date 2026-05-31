@@ -5,31 +5,33 @@ const CAST_NAMESPACE = 'urn:x-cast:com.medhurst.squashscorerplus';
 
 // Set up receiver options to prevent timeout
 const options = new cast.framework.CastReceiverOptions();
-// maxInactivity defines how long (in seconds) the receiver stays active without interaction.
-// We set this to a very high value (24 hours) to ensure the scoreboard stays visible
-// even during long breaks in play.
+
+// disableIdleTimeout is the most critical setting for a non-media dashboard.
+// By default, the receiver shuts down after 5 minutes of inactivity if no media is playing.
+options.disableIdleTimeout = true;
+
+// maxInactivity defines how long (in seconds) the receiver waits for an unresponsive sender.
 options.maxInactivity = 86400;
 
-context.addCustomMessageListener(CAST_NAMESPACE, (event) => {
-    try {
-        let data = event.data;
-        if (typeof data === 'string') {
-            data = JSON.parse(data);
-        }
-        updateUI(data);
-    } catch (e) {
-        console.error('Error handling cast message:', e);
-    }
+// Enable debug logging to see internal framework activity in the console (via chrome://inspect)
+context.setLoggerLevel(cast.framework.LoggerLevel.DEBUG);
+
+// Catch the moment the system decides to shut down the app
+context.addEventListener(cast.framework.system.EventType.SHUTDOWN, (event) => {
+    console.log('### DIAGNOSTIC: SHUTDOWN EVENT RECEIVED');
 });
 
-// Log player events to debug connection drops
-playerManager.addEventListener(cast.framework.events.EventType.ERROR, (event) => {
-    console.error('Player error:', event);
+// Track visibility to see if the HDMI input/device is going to sleep
+context.addEventListener(cast.framework.system.EventType.VISIBILITY_CHANGED, (event) => {
+    console.log('### DIAGNOSTIC: VISIBILITY CHANGED:', event.isVisible);
+});
+
+context.addEventListener(cast.framework.events.EventType.SENDER_CONNECTED, (event) => {
+    console.log('### DIAGNOSTIC: SENDER CONNECTED:', event.senderId);
 });
 
 context.addEventListener(cast.framework.events.EventType.SENDER_DISCONNECTED, (event) => {
-    console.log('Sender disconnected:', event);
-    // Even if sender disconnects, we stay alive due to maxInactivity
+    console.log('### DIAGNOSTIC: SENDER DISCONNECTED:', event.senderId, 'Reason:', event.reason);
 });
 
 function updateUI(data) {
