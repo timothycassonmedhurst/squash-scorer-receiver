@@ -49,35 +49,49 @@
             color: #ffeb3b;
         }
 
-        .main-score-area {
-            flex: 1;
+        .names-row {
             display: flex;
-            align-items: center;
             justify-content: space-around;
-            padding: 40px;
-        }
-
-        .player-container {
-            flex: 1;
-            text-align: center;
-            max-width: 400px;
+            padding: 20px 40px 0 40px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .player-name {
-            font-size: 4vw;
+            font-size: 6vw;
             font-weight: bold;
-            margin-top: 20px;
             text-transform: uppercase;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            flex: 1;
+            text-align: center;
+        }
+
+        .player-name.team-a {
+            color: #8bc34a;
+            padding-right: 20px;
+        }
+
+        .player-name.team-b {
+            color: #ff9800;
+            padding-left: 20px;
+        }
+
+        .main-score-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 40px;
+        }
+
+        .serving-container {
+            width: 15vw;
+            text-align: center;
         }
 
         .serving-indicator {
-            color: #ff9800;
-            font-size: 2.5vw;
-            font-weight: bold;
-            margin-top: 10px;
             visibility: hidden;
         }
 
@@ -85,20 +99,39 @@
             visibility: visible;
         }
 
+        .serving-text {
+            color: #ff9800;
+            font-size: 2.5vw;
+            font-weight: bold;
+        }
+
+        .server-side {
+            color: #fff;
+            font-size: 2vw;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
         .score {
             font-size: 25vw;
             font-weight: bold;
             color: #8bc34a; /* Team A color */
+            min-width: 1.2em;
+            text-align: center;
         }
 
         .team-b .score {
             color: #ff9800; /* Team B color */
         }
 
+        #scoreB {
+            color: #ff9800;
+        }
+
         .divider {
-            font-size: 150px;
+            font-size: 15vw;
             color: #fff;
-            margin: 0 40px;
+            margin: 0 20px;
         }
 
         .footer {
@@ -143,19 +176,28 @@
         <div id="matchDuration" class="timer-text"></div>
     </div>
 
+    <div class="names-row">
+        <div id="playerA" class="player-name team-a">Waiting...</div>
+        <div id="playerB" class="player-name team-b">Waiting...</div>
+    </div>
+
     <div class="main-score-area">
-        <div class="player-container team-a">
-            <div id="playerA" class="player-name">Waiting...</div>
-            <div id="servingA" class="serving-indicator">SERVING</div>
+        <div class="serving-container">
+            <div id="servingA" class="serving-indicator">
+                <div class="serving-text">SERVING</div>
+                <div id="serverSideA" class="server-side"></div>
+            </div>
         </div>
 
         <div id="scoreA" class="score">-</div>
         <div class="divider">-</div>
         <div id="scoreB" class="score">-</div>
 
-        <div class="player-container team-b">
-            <div id="playerB" class="player-name">Waiting...</div>
-            <div id="servingB" class="serving-indicator">SERVING</div>
+        <div class="serving-container">
+            <div id="servingB" class="serving-indicator">
+                <div class="serving-text">SERVING</div>
+                <div id="serverSideB" class="server-side"></div>
+            </div>
         </div>
     </div>
 

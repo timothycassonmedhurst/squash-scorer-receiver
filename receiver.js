@@ -45,13 +45,17 @@ function updateUI(data) {
     setText('scoreB', data.scoreB);
     setText('matchDuration', data.matchDuration);
 
-    // Handle serving indicator
+    // Handle serving indicator and side
     const servingA = document.getElementById('servingA');
     const servingB = document.getElementById('servingB');
+    const serverSideA = document.getElementById('serverSideA');
+    const serverSideB = document.getElementById('serverSideB');
 
     if (servingA && servingB) {
         servingA.classList.remove('visible');
         servingB.classList.remove('visible');
+        if (serverSideA) serverSideA.innerText = '';
+        if (serverSideB) serverSideB.innerText = '';
 
         if (data.server) {
             const server = data.server.trim().toLowerCase();
@@ -62,8 +66,10 @@ function updateUI(data) {
 
             if (isTeamAServing) {
                 servingA.classList.add('visible');
+                if (serverSideA) serverSideA.innerText = data.serverSide || '';
             } else {
                 servingB.classList.add('visible');
+                if (serverSideB) serverSideB.innerText = data.serverSide || '';
             }
         }
     }
