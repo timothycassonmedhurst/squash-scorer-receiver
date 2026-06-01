@@ -31,6 +31,10 @@ context.addCustomMessageListener(CAST_NAMESPACE, (event) => {
 function updateUI(data) {
     if (!data) return;
 
+    if (data.event) {
+        showEventPopup(data.event);
+    }
+
     // Helper to safely set text
     const setText = (id, val) => {
         const el = document.getElementById(id);
@@ -92,6 +96,24 @@ function updateUI(data) {
             });
         }
     }
+}
+
+let popupTimeout;
+function showEventPopup(message) {
+    const popup = document.getElementById('eventPopup');
+    if (!popup) return;
+
+    popup.innerText = message;
+    popup.style.display = 'block';
+
+    if (popupTimeout) {
+        clearTimeout(popupTimeout);
+    }
+
+    popupTimeout = setTimeout(() => {
+        popup.style.display = 'none';
+        popupTimeout = null;
+    }, 2000);
 }
 
 // Start the receiver with the configured options
