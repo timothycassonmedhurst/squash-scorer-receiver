@@ -330,9 +330,11 @@
         }
 
         /* Hide elements when timer is active */
+        body.timer-active .header,
+        body.timer-active .names-row,
         body.timer-active .main-score-area,
         body.timer-active .footer {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
