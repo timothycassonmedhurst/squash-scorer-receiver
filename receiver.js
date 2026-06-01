@@ -128,11 +128,17 @@ function showEventPopup(message, side) {
     }, 3000);
 }
 
+let localTimerInterval;
+let localTimerSeconds = 0;
+let isTimerPaused = false;
+let isTimerExpired = false;
+
 function updateTimerPopup(timerData) {
     const popup = document.getElementById('timerPopup');
     if (!popup) return;
 
     if (!timerData.active) {
+        stopLocalTimer();
         popup.style.display = 'none';
         return;
     }
@@ -142,16 +148,55 @@ function updateTimerPopup(timerData) {
     const label = document.getElementById('timerLabel');
     if (label) label.innerText = timerData.label || '';
 
-    const mins = Math.floor(timerData.seconds / 60);
-    const secs = timerData.seconds % 60;
+    // Always sync on a message, but we expect fewer messages now
+    localTimerSeconds = timerData.seconds;
+    isTimerPaused = !!timerData.paused;
+    isTimerExpired = !!timerData.expired;
+
+    renderTimer();
+
+    if (isTimerPaused || isTimerExpired) {
+        stopLocalTimer();
+    } else {
+        startLocalTimer();
+    }
+}
+
+function startLocalTimer() {
+    if (localTimerInterval) return;
+    localTimerInterval = setInterval(() => {
+        if (localTimerSeconds > 0) {
+            localTimerSeconds--;
+            renderTimer();
+        } else {
+            stopLocalTimer();
+            isTimerExpired = true;
+            renderTimer();
+        }
+    }, 1000);
+}
+
+function stopLocalTimer() {
+    if (localTimerInterval) {
+        clearInterval(localTimerInterval);
+        localTimerInterval = null;
+    }
+}
+
+function renderTimer() {
+    const popup = document.getElementById('timerPopup');
+    if (!popup) return;
+
+    const mins = Math.floor(localTimerSeconds / 60);
+    const secs = localTimerSeconds % 60;
 
     document.getElementById('minTens').innerText = Math.floor(mins / 10);
     document.getElementById('minUnits').innerText = mins % 10;
     document.getElementById('secTens').innerText = Math.floor(secs / 10);
     document.getElementById('secUnits').innerText = secs % 10;
 
-    popup.classList.toggle('paused', !!timerData.paused);
-    popup.classList.toggle('expired', !!timerData.expired);
+    popup.classList.toggle('paused', isTimerPaused);
+    popup.classList.toggle('expired', isTimerExpired);
 }
 
 // Start the receiver with the configured options
