@@ -35,6 +35,10 @@ function updateUI(data) {
         showEventPopup(data.event, data.side || 'center');
     }
 
+    if (data.timer) {
+        updateTimerPopup(data.timer);
+    }
+
     // Helper to safely set text
     const setText = (id, val) => {
         const el = document.getElementById(id);
@@ -121,7 +125,33 @@ function showEventPopup(message, side) {
     popupTimeout = setTimeout(() => {
         popup.classList.remove('animate-left', 'animate-right', 'animate-center');
         popupTimeout = null;
-    }, 2000);
+    }, 3000);
+}
+
+function updateTimerPopup(timerData) {
+    const popup = document.getElementById('timerPopup');
+    if (!popup) return;
+
+    if (!timerData.active) {
+        popup.style.display = 'none';
+        return;
+    }
+
+    popup.style.display = 'flex';
+
+    const label = document.getElementById('timerLabel');
+    if (label) label.innerText = timerData.label || '';
+
+    const mins = Math.floor(timerData.seconds / 60);
+    const secs = timerData.seconds % 60;
+
+    document.getElementById('minTens').innerText = Math.floor(mins / 10);
+    document.getElementById('minUnits').innerText = mins % 10;
+    document.getElementById('secTens').innerText = Math.floor(secs / 10);
+    document.getElementById('secUnits').innerText = secs % 10;
+
+    popup.classList.toggle('paused', !!timerData.paused);
+    popup.classList.toggle('expired', !!timerData.expired);
 }
 
 // Start the receiver with the configured options
