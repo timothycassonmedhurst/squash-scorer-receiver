@@ -120,7 +120,6 @@ function showEventPopup(message, side) {
 
     popupTimeout = setTimeout(() => {
         popup.classList.remove('animate-left', 'animate-right', 'animate-center');
-        popup.style.display = 'none';
         popupTimeout = null;
     }, 2000);
 }
