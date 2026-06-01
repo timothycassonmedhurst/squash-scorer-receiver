@@ -51,6 +51,25 @@ function updateUI(data) {
     setText('playerB', data.teamB);
     setText('matchDuration', data.matchDuration);
 
+    // Update previous games
+    const footer = document.getElementById('previousGames');
+    if (footer) {
+        footer.innerHTML = '';
+        if (data.previousGames && data.previousGames.length > 0) {
+            data.previousGames.forEach((game, index) => {
+                const gameDiv = document.createElement('div');
+                gameDiv.className = 'game-score-item';
+                gameDiv.innerHTML = `
+                    <div class="game-label">GAME ${index + 1}</div>
+                    <div class="game-score">
+                        <span class="score-a">${game.scoreA}</span> - <span class="score-b">${game.scoreB}</span>
+                    </div>
+                `;
+                footer.appendChild(gameDiv);
+            });
+        }
+    }
+
     if (document.body.classList.contains('timer-active')) {
         return;
     }
@@ -85,25 +104,6 @@ function updateUI(data) {
                 servingB.classList.add('visible');
                 if (serverSideB) serverSideB.innerText = data.serverSide || '';
             }
-        }
-    }
-
-    // Update previous games
-    const footer = document.getElementById('previousGames');
-    if (footer) {
-        footer.innerHTML = '';
-        if (data.previousGames && data.previousGames.length > 0) {
-            data.previousGames.forEach((game, index) => {
-                const gameDiv = document.createElement('div');
-                gameDiv.className = 'game-score-item';
-                gameDiv.innerHTML = `
-                    <div class="game-label">GAME ${index + 1}</div>
-                    <div class="game-score">
-                        <span class="score-a">${game.scoreA}</span> - <span class="score-b">${game.scoreB}</span>
-                    </div>
-                `;
-                footer.appendChild(gameDiv);
-            });
         }
     }
 }
