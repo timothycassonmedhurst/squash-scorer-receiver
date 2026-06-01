@@ -32,7 +32,7 @@ function updateUI(data) {
     if (!data) return;
 
     if (data.event) {
-        showEventPopup(data.event);
+        showEventPopup(data.event, data.side || 'center');
     }
 
     // Helper to safely set text
@@ -99,18 +99,27 @@ function updateUI(data) {
 }
 
 let popupTimeout;
-function showEventPopup(message) {
+function showEventPopup(message, side) {
     const popup = document.getElementById('eventPopup');
     if (!popup) return;
 
     popup.innerText = message;
-    popup.style.display = 'block';
+
+    // Reset classes
+    popup.classList.remove('animate-left', 'animate-right', 'animate-center');
+
+    // Trigger reflow to restart animation if needed
+    void popup.offsetWidth;
+
+    // Add animation class based on side
+    popup.classList.add(`animate-${side}`);
 
     if (popupTimeout) {
         clearTimeout(popupTimeout);
     }
 
     popupTimeout = setTimeout(() => {
+        popup.classList.remove('animate-left', 'animate-right', 'animate-center');
         popup.style.display = 'none';
         popupTimeout = null;
     }, 2000);
