@@ -49,6 +49,7 @@ function updateUI(data) {
 
     setText('playerA', data.teamA);
     setText('playerB', data.teamB);
+    setText('matchDuration', data.matchDuration);
 
     if (document.body.classList.contains('timer-active')) {
         return;
