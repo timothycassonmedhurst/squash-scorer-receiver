@@ -140,10 +140,12 @@ function updateTimerPopup(timerData) {
     if (!timerData.active) {
         stopLocalTimer();
         popup.style.display = 'none';
+        document.body.classList.remove('timer-active');
         return;
     }
 
     popup.style.display = 'flex';
+    document.body.classList.add('timer-active');
 
     const label = document.getElementById('timerLabel');
     if (label) label.innerText = timerData.label || '';

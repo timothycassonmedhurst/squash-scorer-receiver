@@ -328,6 +328,12 @@
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
+
+        /* Hide elements when timer is active */
+        body.timer-active .main-score-area,
+        body.timer-active .footer {
+            visibility: hidden;
+        }
     </style>
 </head>
 <body>
